@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <!-- @Transactional -->
+    <tx:annotation-driven />
+
+    <!--
+    base-package를 포함한 하위 패키지를 검색해서
+    @Component, @Service, @Repository, @Controller 어노테이션이 붙어 있는 클래스들을 스프링 빈으로 자동 등록
+    context:annotation-config 를 포함함?
+    -->
+    <context:component-scan base-package="kr.pe.stella.shop.myboard.service, kr.pe.stella.shop.myboard.repository" />
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.mariadb.jdbc.Driver" />
+        <property name="url" value="jdbc:mariadb://52.40.188.249:3306/myborad" />
+        <property name="username" value="maul5" />
+        <property name="password" value="jtpark1469" />
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 스피링 빈에 예외 변환 AOP를 적용 -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- @Entity 탐색 시작 위치 -->
+        <property name="packagesToScan" value="kr.pe.stella.shop.myboard.domain" />
+        <property name="jpaVendorAdapter">
+            <!-- 하이버네이트 구현체 사용 -->
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <!-- 하이버네이트 상세 설정 -->
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop> <!-- 방언 -->
+                <prop key="hibernate.show_sql">true</prop> <!-- SQL 보기 -->
+                <prop key="hibernate.format_sql">true</prop> <!-- SQL 정렬해서 보기 -->
+                <prop key="hibernate.use_sql_comments">true</prop> <!-- SQL 코멘트 보기 -->
+                <prop key="hibernate.new_generator_mappings">true</prop> <!-- 새 버전의 ID 생성 옵션 -->
+                <prop key="hibernate.hbm2ddl.auto">create</prop> <!-- DDL 자동 생성 -->
+            </props>
+        </property>
+    </bean>
+
+</beans>
