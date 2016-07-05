@@ -10,11 +10,11 @@ import java.util.Date;
 public class Post {
     @Id
     @GeneratedValue
-    @Column(name="POST_ID")
+    @Column(name="post_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="BOARD_ID")
+    @JoinColumn(name="board_id")
     private Board board;
 
     private String title;

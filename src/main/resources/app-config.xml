@@ -48,7 +48,7 @@
         <!-- 하이버네이트 상세 설정 -->
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop> <!-- 방언 -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop> <!-- 방언 -->
                 <prop key="hibernate.show_sql">true</prop> <!-- SQL 보기 -->
                 <prop key="hibernate.format_sql">true</prop> <!-- SQL 정렬해서 보기 -->
                 <prop key="hibernate.use_sql_comments">true</prop> <!-- SQL 코멘트 보기 -->

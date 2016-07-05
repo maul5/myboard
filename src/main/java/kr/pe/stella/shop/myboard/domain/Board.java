@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class Board {
     @Id
-    @Column(name="BOARD_ID")
+    @Column(name="board_id")
     private String id;
 
     private String name;
