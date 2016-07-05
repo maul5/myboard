@@ -23,6 +23,13 @@
 
     <mvc:default-servlet-handler />
 
+    <!--
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    -->
     <mvc:view-resolvers>
         <mvc:jsp prefix="/WEB-INF/view/" suffix=".jsp"/>
     </mvc:view-resolvers>
