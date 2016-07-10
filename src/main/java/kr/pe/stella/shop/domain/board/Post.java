@@ -1,4 +1,4 @@
-package kr.pe.stella.shop.myboard.domain;
+package kr.pe.stella.shop.domain.board;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -4,22 +4,22 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd">
-
-    <!-- @Transactional -->
-    <tx:annotation-driven />
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/data/jpa
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <!--
     base-package를 포함한 하위 패키지를 검색해서
     @Component, @Service, @Repository, @Controller 어노테이션이 붙어 있는 클래스들을 스프링 빈으로 자동 등록
     context:annotation-config 를 포함함?
     -->
-    <context:component-scan base-package="kr.pe.stella.shop.myboard.service, kr.pe.stella.shop.myboard.repository" />
+    <context:component-scan base-package="kr.pe.stella.shop.service" />
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -40,7 +40,7 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- @Entity 탐색 시작 위치 -->
-        <property name="packagesToScan" value="kr.pe.stella.shop.myboard.domain" />
+        <property name="packagesToScan" value="kr.pe.stella.shop.domain" />
         <property name="jpaVendorAdapter">
             <!-- 하이버네이트 구현체 사용 -->
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
@@ -53,9 +53,14 @@
                 <prop key="hibernate.format_sql">true</prop> <!-- SQL 정렬해서 보기 -->
                 <prop key="hibernate.use_sql_comments">true</prop> <!-- SQL 코멘트 보기 -->
                 <prop key="hibernate.new_generator_mappings">true</prop> <!-- 새 버전의 ID 생성 옵션 -->
-                <prop key="hibernate.hbm2ddl.auto">create</prop> <!-- DDL 자동 생성 -->
+                <!-- DDL 자동 생성 -->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
             </props>
         </property>
     </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <jpa:repositories base-package="kr.pe.stella.shop.repository" />
 
 </beans>

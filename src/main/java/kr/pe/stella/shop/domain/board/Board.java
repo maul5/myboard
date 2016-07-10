@@ -1,10 +1,8 @@
-package kr.pe.stella.shop.myboard.domain;
+package kr.pe.stella.shop.domain.board;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,4 +42,6 @@ public class Board {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+
 }
