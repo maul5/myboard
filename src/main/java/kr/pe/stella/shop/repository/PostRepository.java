@@ -1,10 +1,10 @@
 package kr.pe.stella.shop.repository;
 
-import kr.pe.stella.shop.domain.board.Board;
+import kr.pe.stella.shop.domain.board.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Created by happy on 2016-07-10.
  */
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 }

@@ -1,5 +1,6 @@
 package kr.pe.stella.shop.web;
 
+import kr.pe.stella.shop.domain.board.Board;
 import kr.pe.stella.shop.domain.board.Post;
 import kr.pe.stella.shop.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,36 @@ public class BoardWeb {
 
     @RequestMapping("/list")
     public String list(Model model) {
-        List<Post> posts = boardService.findAll();
+        List<Post> posts = boardService.findAllPost();
         model.addAttribute("posts", posts);
 
         return "board/list";
+    }
+
+    @RequestMapping(value = "/write", method = RequestMethod.GET)
+    public ModelAndView write() {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("boards", getBoardComboList());
+        mav.addObject("post", new Post());
+        mav.setViewName("board/write");
+
+        return mav;
+    }
+
+    @RequestMapping(value = "/write", method = RequestMethod.POST)
+    public ModelAndView write(Post post) {
+        Post result = boardService.save(post);
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("boards", getBoardComboList());
+        mav.addObject("post", post);
+        mav.setViewName("board/write");
+
+        return mav;
+    }
+
+    private List<Board> getBoardComboList() {
+        List<Board> boards = boardService.findAllBoard();
+        return boards;
     }
 }

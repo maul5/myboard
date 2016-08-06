@@ -3,24 +3,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!-- Spring MVC 기능 활성화 -->
-    <mvc:annotation-driven />
-
-    <!--
-    base-package를 포함한 하위 패키지를 검색해서
-    @Component, @Service, @Repository, @Controller 어노테이션이 붙어 있는 클래스들을 스프링 빈으로 자동 등록
-    context:annotation-config 를 포함함?
-    -->
-    <context:component-scan base-package="kr.pe.stella.shop.web" />
-
+    <!-- DispatcherServlet의 매핑 경로를 '/'로 주었을 때, JSP/HTML/CSS 등을 올바르게 처리 하기 위한 설정 -->
     <mvc:default-servlet-handler />
 
     <!--
@@ -31,7 +19,7 @@
     </bean>
     -->
     <mvc:view-resolvers>
-        <mvc:jsp prefix="/WEB-INF/view/"/> <!-- 기본접미사 .jsp -->
+        <mvc:jsp prefix="/WEB-INF/view/" /> <!-- 기본접미사 .jsp -->
     </mvc:view-resolvers>
 
 </beans>

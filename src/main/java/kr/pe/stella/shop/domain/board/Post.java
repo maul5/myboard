@@ -19,7 +19,12 @@ public class Post {
 
     private String title;
 
-    private Date wirteDate;
+    private String contents;
+
+    //날짜 기본형식 time, day, month, year 형태 저장
+    @Column(nullable = false, columnDefinition = "date dafault sysdate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date wirteDate = new Date();
 
     //연관관계 메소드
     public void setBoard(Board board) {
@@ -53,5 +58,13 @@ public class Post {
 
     public void setWirteDate(Date wirteDate) {
         this.wirteDate = wirteDate;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 }

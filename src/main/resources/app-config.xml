@@ -5,6 +5,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
@@ -12,15 +13,29 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/data/jpa
-       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <!--
     base-package를 포함한 하위 패키지를 검색해서
     @Component, @Service, @Repository, @Controller 어노테이션이 붙어 있는 클래스들을 스프링 빈으로 자동 등록
-    context:annotation-config 를 포함함?
+    <context:annotation-config/> 기능 포함
     -->
-    <context:component-scan base-package="kr.pe.stella.shop.service" />
+    <context:component-scan base-package="kr.pe.stella.shop"/>
 
+
+    <!--
+    (Spring MVC 기능 활성화)
+    @Controller 애노테이션을 이용한 컨트롤러를 사용하기 위한 설정
+    -->
+    <mvc:annotation-driven />
+
+
+    <!-- Spring 빈에 예외 변환 AOP를 적용 -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
+    <!-- DB dataSource -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.mariadb.jdbc.Driver" />
@@ -29,14 +44,13 @@
         <property name="password" value="jtpark1469" />
     </bean>
 
+    <!-- JPA transaction -->
     <bean id="transactionManager"
           class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- 스피링 빈에 예외 변환 AOP를 적용 -->
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
+    <!-- JPA -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- @Entity 탐색 시작 위치 -->
@@ -59,6 +73,7 @@
         </property>
     </bean>
 
+    <!-- transaction 활성화 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
 
     <jpa:repositories base-package="kr.pe.stella.shop.repository" />
