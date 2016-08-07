@@ -6,6 +6,7 @@ import kr.pe.stella.shop.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,14 +23,24 @@ public class BoardWeb {
     @Autowired
     public BoardService boardService;
 
-    @RequestMapping("/list")
-    public String list(Model model) {
-        List<Post> posts = boardService.findAllPost();
+    /**
+     * 보고 싶은 게시판ID를 넣고 목록을 조회한다.
+     * @param model
+     * @param boardId
+     * @return
+     */
+    @RequestMapping("/{boardId}/list")
+    public String list(Model model, @PathVariable String boardId) {
+        List<Post> posts = boardService.findAllPost(boardId);
         model.addAttribute("posts", posts);
 
         return "board/list";
     }
 
+    /**
+     * 글 작성 폼 화면 호출
+     * @return
+     */
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public ModelAndView write() {
         ModelAndView mav = new ModelAndView();
@@ -40,6 +51,11 @@ public class BoardWeb {
         return mav;
     }
 
+    /**
+     * 작성된 글 저장 후 결과를 폼 화면에 표시
+     * @param post
+     * @return
+     */
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public ModelAndView write(Post post) {
         Post result = boardService.save(post);
@@ -52,6 +68,10 @@ public class BoardWeb {
         return mav;
     }
 
+    /**
+     * 게시판 목록을 조회한다.
+     * @return
+     */
     private List<Board> getBoardComboList() {
         List<Board> boards = boardService.findAllBoard();
         return boards;

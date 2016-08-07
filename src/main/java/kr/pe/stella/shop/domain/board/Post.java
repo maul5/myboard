@@ -21,8 +21,7 @@ public class Post {
 
     private String contents;
 
-    //날짜 기본형식 time, day, month, year 형태 저장
-    @Column(nullable = false, columnDefinition = "date dafault sysdate")
+    @Column(nullable = false) //, columnDefinition = "date dafault sysdate"
     @Temporal(TemporalType.TIMESTAMP)
     private Date wirteDate = new Date();
 

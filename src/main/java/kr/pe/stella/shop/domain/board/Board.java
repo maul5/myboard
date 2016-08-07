@@ -16,6 +16,8 @@ public class Board {
 
     private String name;
 
+    private Long ord;
+
     @OneToMany(mappedBy = "board")
     private List<Post> posts = new ArrayList<Post>();
 
@@ -43,5 +45,11 @@ public class Board {
         this.posts = posts;
     }
 
+    public Long getOrd() {
+        return ord;
+    }
 
+    public void setOrd(Long ord) {
+        this.ord = ord;
+    }
 }
